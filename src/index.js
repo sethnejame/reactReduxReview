@@ -1,10 +1,12 @@
-import React from 'react';
-import { render } from 'react-dom';
+import React from "react";
+import { render } from "react-dom";
+import { BrowserRouter as Router } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css"; //imports the minified vers of BS
+import App from "./components/App";
 
-const Hi = () => {
-  return (
-    <p>Hello there!</p>
-  )
-}
-
-render(<Hi/>, document.getElementById("app"));
+render(
+  <Router>
+    <App />
+  </Router>,
+  document.getElementById("app")
+);
