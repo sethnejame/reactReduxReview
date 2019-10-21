@@ -6,8 +6,8 @@ import Header from "./common/Header";
 
 const App = () => {
   return (
-    <Header />
     <div className="container-fluid">
+      <Header />
       <Route exact path="/" component={HomePage} />
       <Route path="/about" component={AboutPage} />
     </div>
