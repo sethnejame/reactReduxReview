@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import * as courseActions from "../../redux/actions/courseActions";
+import PropTypes from "prop-types";
 
 class CoursesPage extends React.Component {
   state = {
@@ -44,6 +45,12 @@ class CoursesPage extends React.Component {
     );
   }
 }
+// Prop Types help us specify the props that our comp accepts
+// Helps catch errors
+CoursesPage.propTypes = {
+  dispatch: PropTypes.func.isRequired
+};
+
 // determines what state is passed to our comp via props
 function mapStateToProps(state, ownProps) {
   return {
