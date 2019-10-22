@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import * as courseActions from "../../redux/actions/courseActions";
 
 class CoursesPage extends React.Component {
   state = {
@@ -14,8 +15,10 @@ class CoursesPage extends React.Component {
   };
 
   handleSubmit = e => {
-    e.preventDefault(); // prevent default behavior on submit (post to server)
-    alert(this.state.course.title);
+    e.preventDefault();
+    // dispatch is auto passed in on props b/c we didn't dec. mapDispatch
+    // it allows us to dispatch our actions
+    this.props.dispatch(courseActions.createCourse(this.state.course));
   };
 
   render() {
