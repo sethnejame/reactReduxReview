@@ -12,10 +12,15 @@ class CoursesPage extends React.Component {
     this.setState({ course });
   };
 
+  handleSubmit = e => {
+    e.preventDefault(); // prevent default behavior on submit (post to server)
+    alert(this.state.course.title);
+  };
+
   render() {
     return (
       <div>
-        <form>
+        <form onSubmit={this.handleSubmit}>
           <h2>Courses</h2>
           <h3>Add Course</h3>
           <div className="form-group">
@@ -30,6 +35,7 @@ class CoursesPage extends React.Component {
             <input className="btn btn-primary" type="submit" value="save" />
           </div>
         </form>
+        {console.log(this.state)}
       </div>
     );
   }
