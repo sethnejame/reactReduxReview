@@ -1,6 +1,15 @@
 import React from "react";
 
 class CoursesPage extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      course: {
+        title: ""
+      }
+    };
+  }
+
   render() {
     return (
       <div>
