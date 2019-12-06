@@ -1,65 +1,53 @@
-import React from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import * as courseActions from "../../redux/actions/courseActions";
 import PropTypes from "prop-types";
 
-class CoursesPage extends React.Component {
-  state = {
-    course: {
-      title: ""
-    }
+const CoursesPage = (props) => {
+  const [course, setCourse] = useState({
+    title: ""
+  });
+
+  const handleChange = e => {
+    setCourse({...this.state.course, [e.target.name]: e.target.value})
   };
 
-  handleChange = e => {
-    const course = { ...this.state.course, title: e.target.value };
-    this.setState({ course });
-  };
-
-  handleSubmit = e => {
+  const handleSubmit = e => {
     e.preventDefault();
-    // dispatch is auto passed in on props b/c we didn't dec. mapDispatch
-    // it allows us to dispatch our actions
-    this.props.dispatch(courseActions.createCourse(this.state.course));
+    return props.dispatch(courseActions.createCourse(course));
   };
 
-  render() {
-    return (
+  return (
       <div>
-        <form onSubmit={this.handleSubmit}>
+        <form onSubmit={handleSubmit}>
           <h2>Courses</h2>
           <h3>Add Course</h3>
           <div className="form-group">
             <input
-              type="text"
-              className="form-control"
-              onChange={this.handleChange}
-              value={this.state.course.title}
+                type="text"
+                name="title"
+                className="form-control"
+                onChange={handleChange}
+                value={course.title}
             />
           </div>
           <div className="form-group">
-            <input className="btn btn-primary" type="submit" value="save" />
+            <input className="btn btn-primary" type="submit" value="save"/>
           </div>
         </form>
         {console.log(this.state)}
       </div>
-    );
-  }
-}
-// Prop Types help us specify the props that our comp accepts
-// Helps catch errors
+  )
+};
+
 CoursesPage.propTypes = {
   dispatch: PropTypes.func.isRequired
 };
 
-// determines what state is passed to our comp via props
-function mapStateToProps(state, ownProps) {
+function mapStateToProps(state) {
   return {
     courses: state.courses
   };
 }
-
-// determines what actions are passed to our comp via props
-// function mapDispatchToProps() {
-// }
 
 export default connect(mapStateToProps)(CoursesPage);
