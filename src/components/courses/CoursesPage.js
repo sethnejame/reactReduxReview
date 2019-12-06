@@ -9,12 +9,12 @@ const CoursesPage = (props) => {
   });
 
   const handleChange = e => {
-    setCourse({...this.state.course, [e.target.name]: e.target.value})
+    setCourse({...course, [e.target.name]: e.target.value})
   };
 
   const handleSubmit = e => {
     e.preventDefault();
-    return props.dispatch(courseActions.createCourse(course));
+    props.dispatch(courseActions.createCourse(course));
   };
 
   return (
@@ -35,7 +35,7 @@ const CoursesPage = (props) => {
             <input className="btn btn-primary" type="submit" value="save"/>
           </div>
         </form>
-        {console.log(this.state)}
+        {console.log(course)}
       </div>
   )
 };
@@ -46,7 +46,7 @@ CoursesPage.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    courses: state.courses
+    course: state.courses
   };
 }
 
