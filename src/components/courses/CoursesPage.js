@@ -8,6 +8,8 @@ const CoursesPage = (props) => {
     title: ""
   });
 
+  const { allCourses } = props;
+
   const handleChange = e => {
     setCourse({...course, [e.target.name]: e.target.value})
   };
@@ -34,8 +36,14 @@ const CoursesPage = (props) => {
           <div className="form-group">
             <input className="btn btn-primary" type="submit" value="save"/>
           </div>
+          <div className="container">
+            <ul>
+            {allCourses.length > 0 ? allCourses.map((course, index) => (
+                <li key={index}>{course.title}</li>
+            )) : undefined}
+            </ul>
+          </div>
         </form>
-        {console.log(course)}
       </div>
   )
 };
@@ -43,10 +51,10 @@ const CoursesPage = (props) => {
 CoursesPage.propTypes = {
   dispatch: PropTypes.func.isRequired
 };
-
+// the first argument in mapStateToProps is the entire Redux store state (state)
 function mapStateToProps(state) {
   return {
-    course: state.courses
+    allCourses: state.allCourses
   };
 }
 
