@@ -18,7 +18,8 @@ const CoursesPage = (props) => {
     e.preventDefault();
     console.log('handleSubmit is called')
     debugger;
-    createCourse();
+    createCourse(course);
+
   };
 
   return (
@@ -51,7 +52,7 @@ const CoursesPage = (props) => {
 };
 
 CoursesPage.propTypes = {
-  dispatch: PropTypes.func.isRequired,
+  createCourse: PropTypes.func.isRequired,
   courses: PropTypes.array.isRequired
 };
 // the first argument in mapStateToProps is the entire Redux store state (state)
@@ -69,4 +70,4 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-export default connect(mapStateToProps)(CoursesPage);
+export default connect(mapStateToProps,mapDispatchToProps)(CoursesPage);
