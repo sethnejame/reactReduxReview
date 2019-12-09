@@ -8,7 +8,7 @@ const CoursesPage = (props) => {
     title: ""
   });
 
-  const { courses } = props;
+  const { courses, createCourse } = props;
 
   const handleChange = e => {
     setCourse({...course, [e.target.name]: e.target.value})
@@ -18,7 +18,7 @@ const CoursesPage = (props) => {
     e.preventDefault();
     console.log('handleSubmit is called')
     debugger;
-    props.dispatch(courseActions.createCourse(course));
+    createCourse();
   };
 
   return (
@@ -63,6 +63,10 @@ function mapStateToProps(state) {
   };
 }
 
-
+function mapDispatchToProps(dispatch) {
+  return {
+    createCourse: course => dispatch(courseActions.createCourse(course))
+  }
+}
 
 export default connect(mapStateToProps)(CoursesPage);
