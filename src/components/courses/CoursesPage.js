@@ -8,7 +8,7 @@ const CoursesPage = (props) => {
     title: ""
   });
 
-  const { allCourses } = props;
+  const { courses } = props;
 
   const handleChange = e => {
     setCourse({...course, [e.target.name]: e.target.value})
@@ -16,6 +16,8 @@ const CoursesPage = (props) => {
 
   const handleSubmit = e => {
     e.preventDefault();
+    console.log('handleSubmit is called')
+    debugger;
     props.dispatch(courseActions.createCourse(course));
   };
 
@@ -38,7 +40,7 @@ const CoursesPage = (props) => {
           </div>
           <div className="container">
             <ul>
-            {allCourses.length > 0 ? allCourses.map((course, index) => (
+            {courses.length > 0 ? courses.map((course, index) => (
                 <li key={index}>{course.title}</li>
             )) : undefined}
             </ul>
@@ -49,13 +51,18 @@ const CoursesPage = (props) => {
 };
 
 CoursesPage.propTypes = {
-  dispatch: PropTypes.func.isRequired
+  dispatch: PropTypes.func.isRequired,
+  courses: PropTypes.array.isRequired
 };
 // the first argument in mapStateToProps is the entire Redux store state (state)
 function mapStateToProps(state) {
+  debugger;
+  console.log('mapState is called, mapping the new stored state to the CoursesPage component (passed in on props)');
   return {
-    allCourses: state.allCourses
+    courses: state.allCourses
   };
 }
+
+
 
 export default connect(mapStateToProps)(CoursesPage);
