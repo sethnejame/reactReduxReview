@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import * as courseActions from "../../redux/actions/courseActions";
 import PropTypes from "prop-types";
+import CourseList from './CourseList';
 
 const CoursesPage = (props) => {
 
@@ -14,13 +15,7 @@ const CoursesPage = (props) => {
   return (
       <>
           <h2>Courses</h2>
-          <div className="container">
-            <ul>
-            {courses.length > 0 ? courses.map((course, index) => (
-                <li key={index}>{course.title}</li>
-            )) : undefined}
-            </ul>
-          </div>
+          <CourseList courses={courses} />
       </>
   )
 };
