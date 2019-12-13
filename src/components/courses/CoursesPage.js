@@ -4,41 +4,12 @@ import * as courseActions from "../../redux/actions/courseActions";
 import PropTypes from "prop-types";
 
 const CoursesPage = (props) => {
-  const [course, setCourse] = useState({
-    title: ""
-  });
 
-  const { courses, createCourse } = props;
-
-  const handleChange = e => {
-    setCourse({...course, [e.target.name]: e.target.value})
-  };
-
-  const handleSubmit = e => {
-    e.preventDefault();
-    console.log('handleSubmit is called')
-    debugger;
-    createCourse(course);
-
-  };
+  const { courses } = props;
 
   return (
-      <div>
-        <form onSubmit={handleSubmit}>
+      <>
           <h2>Courses</h2>
-          <h3>Add Course</h3>
-          <div className="form-group">
-            <input
-                type="text"
-                name="title"
-                className="form-control"
-                onChange={handleChange}
-                value={course.title}
-            />
-          </div>
-          <div className="form-group">
-            <input className="btn btn-primary" type="submit" value="save"/>
-          </div>
           <div className="container">
             <ul>
             {courses.length > 0 ? courses.map((course, index) => (
@@ -46,8 +17,7 @@ const CoursesPage = (props) => {
             )) : undefined}
             </ul>
           </div>
-        </form>
-      </div>
+      </>
   )
 };
 
