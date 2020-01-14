@@ -9,9 +9,9 @@ const ManageCoursePage = (props) => {
     const { courses, authors, loadCourses, loadAuthors } = props;
 
     useEffect(() => {
-        loadCourses();
-        loadAuthors()
-    }, []);
+        courses.length === 0 ? loadCourses() : null;
+        authors.length === 0 ? loadAuthors() : null;
+    }, [courses, authors]);
 
     return (
         <>
@@ -21,7 +21,7 @@ const ManageCoursePage = (props) => {
 };
 
 ManageCoursePage.propTypes = {
-    createCourse: PropTypes.func.isRequired,
+    loadAuthors: PropTypes.func.isRequired,
     loadCourses: PropTypes.func.isRequired,
     courses: PropTypes.array.isRequired,
     authors: PropTypes.array.isRequired
@@ -35,7 +35,6 @@ function mapStateToProps(state) {
 }
 
 const mapDispatchToProps = {
-    createCourse: courseActions.createCourse,
     loadCourses: courseActions.loadCourses,
     loadAuthors: authorActions.loadAuthors,
 };
