@@ -1,65 +1,52 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import * as courseActions from "../../redux/actions/courseActions";
+import * as authorActions from "../../redux/actions/authorActions";
 import PropTypes from "prop-types";
+import CourseList from './CourseList';
+import {loadAuthors} from "../../redux/actions/authorActions";
 
-class CoursesPage extends React.Component {
-  state = {
-    course: {
-      title: ""
-    }
-  };
+const CoursesPage = (props) => {
 
-  handleChange = e => {
-    const course = { ...this.state.course, title: e.target.value };
-    this.setState({ course });
-  };
+  const { courses, authors, loadCourses, loadAuthors } = props;
 
-  handleSubmit = e => {
-    e.preventDefault();
-    // dispatch is auto passed in on props b/c we didn't dec. mapDispatch
-    // it allows us to dispatch our actions
-    this.props.dispatch(courseActions.createCourse(this.state.course));
-  };
+  useEffect(() => {
+    loadCourses();
+    loadAuthors()
+  }, []);
 
-  render() {
-    return (
-      <div>
-        <form onSubmit={this.handleSubmit}>
+  return (
+      <>
           <h2>Courses</h2>
-          <h3>Add Course</h3>
-          <div className="form-group">
-            <input
-              type="text"
-              className="form-control"
-              onChange={this.handleChange}
-              value={this.state.course.title}
-            />
-          </div>
-          <div className="form-group">
-            <input className="btn btn-primary" type="submit" value="save" />
-          </div>
-        </form>
-        {console.log(this.state)}
-      </div>
-    );
-  }
-}
-// Prop Types help us specify the props that our comp accepts
-// Helps catch errors
-CoursesPage.propTypes = {
-  dispatch: PropTypes.func.isRequired
+          <CourseList courses={courses} authors={authors}/>
+      </>
+  )
 };
 
-// determines what state is passed to our comp via props
-function mapStateToProps(state, ownProps) {
+CoursesPage.propTypes = {
+  createCourse: PropTypes.func.isRequired,
+  loadCourses: PropTypes.func.isRequired,
+  courses: PropTypes.array.isRequired,
+  authors: PropTypes.array.isRequired
+};
+// the first argument in mapStateToProps is the entire Redux store state (state)
+function mapStateToProps(state) {
   return {
-    courses: state.courses
-  };
+    courses: state.authors.length === 0 ? []
+        : state.allCourses.map(course => {
+      return {
+        ...course,
+        authorName: state.authors.find(a => a.id === course.authorId).name
+      }
+    }),
+    authors: state.authors
+  }
 }
 
-// determines what actions are passed to our comp via props
-// function mapDispatchToProps() {
-// }
+const mapDispatchToProps = {
+  createCourse: courseActions.createCourse,
+  loadCourses: courseActions.loadCourses,
+  loadAuthors: authorActions.loadAuthors,
+};
 
-export default connect(mapStateToProps)(CoursesPage);
+export default connect(mapStateToProps,mapDispatchToProps)(CoursesPage);

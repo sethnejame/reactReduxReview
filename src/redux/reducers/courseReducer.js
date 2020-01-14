@@ -1,11 +1,15 @@
-// below we use an array because the state will  be an array of courses
-export default function courseReducer(state = [], action) {
+import { CREATE_COURSE, LOAD_COURSES_SUCCESS } from "../actions/actionTypes";
+import initialState from './initialState'
+
+export const courseReducer = (state = initialState.courses, action) => {
   switch(action.type) {
-    case "CREATE_COURSE":
-      // again, spreading the old list of courses into an array
-      // and adding the new one so we don't mutate old state
-      return [...state, {...action.course}]
+    case CREATE_COURSE:
+      console.log('courseReducer invokes createCourse');
+      return [...state, {...action.payload}];
+    case LOAD_COURSES_SUCCESS:
+      console.log('courseReducer invokes loadCourses');
+      return action.payload;
     default:
       return state;
   }
-}
+};
