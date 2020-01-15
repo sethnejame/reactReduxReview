@@ -6,6 +6,7 @@ import AboutPage from "./about/AboutPage";
 import CoursesPage from "./courses/CoursesPage";
 import Header from "./common/Header";
 import PageNotFound from "./PageNotFound";
+import ManageCoursePage from './courses/ManageCoursePage'
 
 const App = () => {
   return (
@@ -15,6 +16,7 @@ const App = () => {
         <Route exact path="/" component={HomePage} />
         <Route path="/about" component={AboutPage} />
         <Route path="/courses" component={CoursesPage} />
+        <Route path="/managecourse" component={ManageCoursePage} />
         <Route component={PageNotFound} />
       </Switch>
     </div>
