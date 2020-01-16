@@ -10,9 +10,17 @@ const CoursesPage = (props) => {
   const { courses, authors, loadCourses, loadAuthors } = props
 
   useEffect(() => {
-    courses.length === 0 ? loadCourses() : null
-    authors.length === 0 ? loadAuthors() : null
-  }, [courses, authors])
+    if(courses.length === 0) {
+        loadCourses().catch(error => {
+            alert("Loading courses failed" + error);
+        })
+    }
+    if(authors.length === 0) {
+         loadAuthors().catch(error => {
+             alert("Loading authors failed" + error);
+         })
+    }
+  }, [])
 
   return (
       <>

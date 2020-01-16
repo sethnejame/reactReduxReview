@@ -31,13 +31,13 @@ const ManageCoursePage = (props) => {
 ManageCoursePage.propTypes = {
     loadAuthors: PropTypes.func.isRequired,
     loadCourses: PropTypes.func.isRequired,
-    courses: PropTypes.array,
+    courses: PropTypes.array.isRequired,
     authors: PropTypes.array.isRequired
 };
 // the first argument in mapStateToProps is the entire Redux store state (state)
 function mapStateToProps(state) {
     return {
-        courses: state.courses,
+        courses: state.allCourses,
         authors: state.authors
     }
 }

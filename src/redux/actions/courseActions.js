@@ -2,7 +2,6 @@ import { CREATE_COURSE, LOAD_COURSES_SUCCESS } from "./actionTypes";
 import * as courseApi from "../../api/courseApi"
 
 export function createCourse(course) {
-  console.log('createCourse action is called');
   return { type: CREATE_COURSE, payload: course }
 }
 
@@ -16,7 +15,7 @@ export function loadCourses() {
     return courseApi.getCourses().then(courses => {
       dispatch(loadCoursesSuccess(courses));
     }).catch(error => {
-      console.log(error);
+      console.log('There was an error: ' + error);
       throw error;
     })
   }
