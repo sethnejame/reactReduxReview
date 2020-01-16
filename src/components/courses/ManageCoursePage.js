@@ -1,12 +1,16 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import * as courseActions from "../../redux/actions/courseActions";
 import * as authorActions from "../../redux/actions/authorActions";
 import PropTypes from "prop-types";
+import CourseForm from "./CourseForm";
+import { newCourse } from  "../../../tools/mockData"
 
 const ManageCoursePage = (props) => {
+    const { courses, authors, loadCourses, loadAuthors, ...rest } = props;
+    const [ course, setCourse ] = useState({...rest.course})
+    const [ errors, setErrors ] = useState({})
 
-    const { courses, authors, loadCourses, loadAuthors } = props;
 
     useEffect(() => {
        if(courses.length === 0) {
@@ -22,9 +26,7 @@ const ManageCoursePage = (props) => {
     }, []);
 
     return (
-        <>
-            <h2>Manage Course</h2>
-        </>
+        <CourseForm course={course} errors={errors} authors={authors} />
     )
 };
 
@@ -32,11 +34,14 @@ ManageCoursePage.propTypes = {
     loadAuthors: PropTypes.func.isRequired,
     loadCourses: PropTypes.func.isRequired,
     courses: PropTypes.array.isRequired,
-    authors: PropTypes.array.isRequired
-};
+    authors: PropTypes.array.isRequired,
+    course: PropTypes.object.isRequired
+}
+
 // the first argument in mapStateToProps is the entire Redux store state (state)
 function mapStateToProps(state) {
     return {
+        course: newCourse,
         courses: state.allCourses,
         authors: state.authors
     }
