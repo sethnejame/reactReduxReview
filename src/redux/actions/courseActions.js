@@ -9,12 +9,12 @@ export function loadCoursesSuccess(courses) {
   return { type: types.LOAD_COURSES_SUCCESS, payload: courses }
 }
 
-export function updatedCourseSuccess(courses) {
-  return { type: types.UPDATED_COURSE_SUCCESS, payload: courses }
+export function updatedCourseSuccess(course) {
+  return { type: types.UPDATED_COURSE_SUCCESS, payload: course }
 }
 
-export function createCourseSuccess(courses) {
-  return { type: types.CREATE_COURSE_SUCCESS, payload: courses }
+export function createCourseSuccess(course) {
+  return { type: types.CREATE_COURSE_SUCCESS, payload: course }
 }
 // thunks go at bottom of file
 // every thunk returns a func which accepts dispatch
