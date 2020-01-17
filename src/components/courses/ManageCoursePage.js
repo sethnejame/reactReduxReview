@@ -7,49 +7,57 @@ import CourseForm from "./CourseForm";
 import { newCourse } from  "../../../tools/mockData"
 
 const ManageCoursePage = (props) => {
-    const { courses, authors, loadCourses, loadAuthors, ...rest } = props;
-    const [ course, setCourse ] = useState({...rest.course})
-    const [ errors, setErrors ] = useState({})
+  const { courses, authors, loadCourses, loadAuthors, ...rest } = props;
+  const [ course, setCourse ] = useState({...rest.course})
+  const [ errors, setErrors ] = useState({})
 
 
-    useEffect(() => {
-       if(courses.length === 0) {
-           loadCourses().catch(error => {
-               alert("Loading courses failed" + error);
-           })
-       }
-       if(authors.length === 0) {
-            loadAuthors().catch(error => {
-                alert("Loading authors failed" + error);
-            })
-       }
-    }, []);
+  useEffect(() => {
+   if(courses.length === 0) {
+     loadCourses().catch(error => {
+         alert("Loading courses failed" + error);
+     })
+   }
+   if(authors.length === 0) {
+      loadAuthors().catch(error => {
+          alert("Loading authors failed" + error);
+      })
+   }
+  }, []);
 
-    return (
-        <CourseForm course={course} errors={errors} authors={authors} />
-    )
+  const onChange = e => {
+    const { name, value } = e.target
+    setCourse(prevCourse => ({
+      ...prevCourse,  [name]: name === "authorId" ?
+        parseInt(value, 10) : value
+    }))
+  }
+
+  return (
+    <CourseForm course={course} errors={errors} authors={authors} onChange={onChange} />
+  )
 };
 
 ManageCoursePage.propTypes = {
-    loadAuthors: PropTypes.func.isRequired,
-    loadCourses: PropTypes.func.isRequired,
-    courses: PropTypes.array.isRequired,
-    authors: PropTypes.array.isRequired,
-    course: PropTypes.object.isRequired
+  loadAuthors: PropTypes.func.isRequired,
+  loadCourses: PropTypes.func.isRequired,
+  courses: PropTypes.array.isRequired,
+  authors: PropTypes.array.isRequired,
+  course: PropTypes.object.isRequired
 }
 
 // the first argument in mapStateToProps is the entire Redux store state (state)
 function mapStateToProps(state) {
-    return {
-        course: newCourse,
-        courses: state.allCourses,
-        authors: state.authors
-    }
+  return {
+    course: newCourse,
+    courses: state.allCourses,
+    authors: state.authors
+  }
 }
 
 const mapDispatchToProps = {
-    loadCourses: courseActions.loadCourses,
-    loadAuthors: authorActions.loadAuthors,
+  loadCourses: courseActions.loadCourses,
+  loadAuthors: authorActions.loadAuthors,
 };
 
 export default connect(mapStateToProps,mapDispatchToProps)(ManageCoursePage);
