@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { connect } from "react-redux";
-import * as courseActions from "../../redux/actions/courseActions";
-import * as authorActions from "../../redux/actions/authorActions";
-import PropTypes from "prop-types";
-import CourseForm from "./CourseForm";
-import { newCourse } from  "../../../tools/mockData"
+import React, { useEffect, useState } from 'react'
+import { connect } from 'react-redux'
+import * as courseActions from '../../redux/actions/courseActions'
+import * as authorActions from '../../redux/actions/authorActions'
+import PropTypes from 'prop-types'
+import CourseForm from './CourseForm'
+import { newCourse } from  '../../../tools/mockData'
+import Spinner from '../common/Spinner'
 
 const ManageCoursePage = (props) => {
   const {
@@ -19,15 +20,20 @@ const ManageCoursePage = (props) => {
 
   const [ course, setCourse ] = useState({...rest.course})
   const [ errors, setErrors ] = useState({})
+  const [ loading, setLoading] = useState(true)
 
 
   useEffect(() => {
    if(courses.length === 0) {
+     setLoading(true)
      loadCourses().catch(error => {
          alert("Loading courses failed" + error);
      })
+     setLoading(false)
    } else {
+     setLoading(true)
      setCourse({...rest.course})
+     setLoading(false)
    }
    if(authors.length === 0) {
       loadAuthors().catch(error => {
@@ -52,7 +58,18 @@ const ManageCoursePage = (props) => {
   }
 
   return (
-    <CourseForm course={course} errors={errors} authors={authors} onChange={onChange} onSave={onSave}/>
+    <>
+    { loading ? <Spinner/> : (
+        <CourseForm
+          course={course}
+          errors={errors}
+          authors={authors}
+          onChange={onChange}
+          onSave={onSave}
+        />
+      )
+    }
+    </>
   )
 };
 

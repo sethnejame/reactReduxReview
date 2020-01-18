@@ -5,39 +5,49 @@ import * as authorActions from '../../redux/actions/authorActions'
 import PropTypes from 'prop-types'
 import CourseList from './CourseList'
 import { Redirect } from 'react-router-dom'
+import Spinner from "../common/Spinner";
 
 const CoursesPage = (props) => {
 
   const { courses, authors, loadCourses, loadAuthors } = props
   const [ redirect, setRedirect ] = useState()
+  const [ loading, setLoading] = useState(true)
 
   useEffect(() => {
     if(courses.length === 0) {
+      setLoading(true)
         loadCourses().catch(error => {
             alert("Loading courses failed" + error);
         })
+      setLoading(false)
     }
     if(authors.length === 0) {
+      setLoading(true)
          loadAuthors().catch(error => {
              alert("Loading authors failed" + error);
          })
+      setLoading(false)
     }
   }, [])
 
   return (
       <>
         { redirect && <Redirect to='/course' />}
-          <h2>Courses</h2>
+        {loading ? <Spinner/> : (
+          <>
+            <h2>Courses</h2>
 
-          <button
-            style={{ marginBottom: 20 }}
-            className="btn btn-primary add-course"
-            onClick={() => setRedirect(true)}
-          >
-            Add Course
-          </button>
+            <button
+              style={{ marginBottom: 20 }}
+              className="btn btn-primary add-course"
+              onClick={() => setRedirect(true)}
+            >
+              Add Course
+            </button>
 
-          <CourseList courses={courses} authors={authors}/>
+            <CourseList courses={courses} authors={authors}/>
+          </>
+        )}
       </>
   )
 }
