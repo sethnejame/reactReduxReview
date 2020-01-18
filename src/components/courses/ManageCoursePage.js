@@ -64,10 +64,17 @@ ManageCoursePage.propTypes = {
   history: PropTypes.object.isRequired,
 }
 
+const getCourseBySlug = (courses, slug) => courses.find(course => course.slug === slug) || null
+
 // the first argument in mapStateToProps is the entire Redux store state (state)
-function mapStateToProps(state) {
+// ownProps is automatically added by Redux and lets us access our component's (MCP's) props
+// in this case, it means we can access routing related props that are populated on this component
+// automatically by react router
+function mapStateToProps(state, ownProps) {
+  const slug = ownProps.match.params.slug
+  const course = slug? getCourseBySlug(state.allCourses, slug) : newCourse
   return {
-    course: newCourse,
+    course,
     courses: state.allCourses,
     authors: state.authors
   }
