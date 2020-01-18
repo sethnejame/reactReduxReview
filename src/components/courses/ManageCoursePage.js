@@ -26,13 +26,15 @@ const ManageCoursePage = (props) => {
      loadCourses().catch(error => {
          alert("Loading courses failed" + error);
      })
+   } else {
+     setCourse({...rest.course})
    }
    if(authors.length === 0) {
       loadAuthors().catch(error => {
           alert("Loading authors failed" + error);
       })
    }
-  }, []);
+  }, [props.course]);
 
   const onChange = e => {
     const { name, value } = e.target
