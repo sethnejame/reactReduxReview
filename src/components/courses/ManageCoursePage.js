@@ -7,7 +7,7 @@ import CourseForm from "./CourseForm";
 import { newCourse } from  "../../../tools/mockData"
 
 const ManageCoursePage = (props) => {
-  const { courses, authors, loadCourses, loadAuthors, ...rest } = props;
+  const { courses, authors, loadCourses, loadAuthors, saveCourse, ...rest } = props;
   const [ course, setCourse ] = useState({...rest.course})
   const [ errors, setErrors ] = useState({})
 
@@ -33,12 +33,18 @@ const ManageCoursePage = (props) => {
     }))
   }
 
+  const onSave = (e) => {
+    e.preventDefault()
+    saveCourse(course)
+  }
+
   return (
-    <CourseForm course={course} errors={errors} authors={authors} onChange={onChange} />
+    <CourseForm course={course} errors={errors} authors={authors} onChange={onChange} onSave={onSave}/>
   )
 };
 
 ManageCoursePage.propTypes = {
+  saveCourse: PropTypes.func.isRequired,
   loadAuthors: PropTypes.func.isRequired,
   loadCourses: PropTypes.func.isRequired,
   courses: PropTypes.array.isRequired,
@@ -56,6 +62,7 @@ function mapStateToProps(state) {
 }
 
 const mapDispatchToProps = {
+  saveCourse: courseActions.saveCourse,
   loadCourses: courseActions.loadCourses,
   loadAuthors: authorActions.loadAuthors,
 };
