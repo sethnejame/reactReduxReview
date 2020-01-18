@@ -1,13 +1,15 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import * as courseActions from '../../redux/actions/courseActions'
 import * as authorActions from '../../redux/actions/authorActions'
 import PropTypes from 'prop-types'
 import CourseList from './CourseList'
+import { Redirect } from 'react-router-dom'
 
 const CoursesPage = (props) => {
 
   const { courses, authors, loadCourses, loadAuthors } = props
+  const [ redirect, setRedirect ] = useState()
 
   useEffect(() => {
     if(courses.length === 0) {
@@ -24,7 +26,17 @@ const CoursesPage = (props) => {
 
   return (
       <>
+        { redirect && <Redirect to='/course' />}
           <h2>Courses</h2>
+
+          <button
+            style={{ marginBottom: 20 }}
+            className="btn btn-primary add-course"
+            onClick={() => setRedirect(true)}
+          >
+            Add Course
+          </button>
+
           <CourseList courses={courses} authors={authors}/>
       </>
   )
@@ -51,7 +63,7 @@ function mapStateToProps(state) {
 }
 
 const mapDispatchToProps = {
-  createCourse: courseActions.createCourse,
+  createCourse: courseActions.saveCourse,
   loadCourses: courseActions.loadCourses,
   loadAuthors: authorActions.loadAuthors,
 }
