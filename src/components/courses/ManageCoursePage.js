@@ -72,7 +72,8 @@ const getCourseBySlug = (courses, slug) => courses.find(course => course.slug ==
 // automatically by react router
 function mapStateToProps(state, ownProps) {
   const slug = ownProps.match.params.slug
-  const course = slug? getCourseBySlug(state.allCourses, slug) : newCourse
+  const course = slug && state.allCourses.length > 0
+    ? getCourseBySlug(state.allCourses, slug) : newCourse
   return {
     course,
     courses: state.allCourses,
