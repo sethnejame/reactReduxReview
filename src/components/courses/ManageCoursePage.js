@@ -7,7 +7,16 @@ import CourseForm from "./CourseForm";
 import { newCourse } from  "../../../tools/mockData"
 
 const ManageCoursePage = (props) => {
-  const { courses, authors, loadCourses, loadAuthors, saveCourse, ...rest } = props;
+  const {
+    courses,
+    authors,
+    loadCourses,
+    loadAuthors,
+    saveCourse,
+    history,
+    ...rest
+  } = props;
+
   const [ course, setCourse ] = useState({...rest.course})
   const [ errors, setErrors ] = useState({})
 
@@ -35,7 +44,9 @@ const ManageCoursePage = (props) => {
 
   const onSave = (e) => {
     e.preventDefault()
-    saveCourse(course)
+    saveCourse(course).then( ()=> {
+      history.push('/courses')
+    })
   }
 
   return (
@@ -49,7 +60,8 @@ ManageCoursePage.propTypes = {
   loadCourses: PropTypes.func.isRequired,
   courses: PropTypes.array.isRequired,
   authors: PropTypes.array.isRequired,
-  course: PropTypes.object.isRequired
+  course: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
 }
 
 // the first argument in mapStateToProps is the entire Redux store state (state)
