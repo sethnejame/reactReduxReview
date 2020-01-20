@@ -9,7 +9,7 @@ import Spinner from "../common/Spinner";
 
 const CoursesPage = (props) => {
 
-  const { courses, authors, loadCourses, loadAuthors } = props
+  const { courses, authors, loadCourses, loadAuthors, loading } = props
   const [ redirect, setRedirect ] = useState()
 
   useEffect(() => {

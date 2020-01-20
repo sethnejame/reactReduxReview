@@ -15,25 +15,20 @@ const ManageCoursePage = (props) => {
     loadAuthors,
     saveCourse,
     history,
+    loading,
     ...rest
   } = props;
 
   const [ course, setCourse ] = useState({...rest.course})
   const [ errors, setErrors ] = useState({})
-  const [ loading, setLoading] = useState(true)
-
 
   useEffect(() => {
    if(courses.length === 0) {
-     setLoading(true)
      loadCourses().catch(error => {
          alert("Loading courses failed" + error);
      })
-     setLoading(false)
    } else {
-     setLoading(true)
      setCourse({...rest.course})
-     setLoading(false)
    }
    if(authors.length === 0) {
       loadAuthors().catch(error => {
@@ -81,6 +76,7 @@ ManageCoursePage.propTypes = {
   authors: PropTypes.array.isRequired,
   course: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
+  loading: PropTypes.bool.isRequired,
 }
 
 const getCourseBySlug = (courses, slug) => courses.find(course => course.slug === slug) || null
@@ -96,7 +92,8 @@ function mapStateToProps(state, ownProps) {
   return {
     course,
     courses: state.allCourses,
-    authors: state.authors
+    authors: state.authors,
+    loading: state.apiCallsInProgress > 0,
   }
 }
 
