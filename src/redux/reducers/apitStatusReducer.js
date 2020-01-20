@@ -8,8 +8,10 @@ function actionTypeEndsInSuccess(type) {
 export const apiCallStatusReducer = (state = initialState.apiCallsInProgress,
                                      action) => {
   if (action.type == BEGIN_API_CALL) {
+    console.log('apiCallStatusReducer is called the first time')
     return state + 1
   } else if (actionTypeEndsInSuccess(action.type)) {
+    console.log('apiCallStatusReducer is called again')
     return state - 1;
   }
 

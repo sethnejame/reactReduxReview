@@ -21,6 +21,7 @@ const ManageCoursePage = (props) => {
 
   const [ course, setCourse ] = useState({...rest.course})
   const [ errors, setErrors ] = useState({})
+  const [ saving, setSaving ] = useState(false)
 
   useEffect(() => {
    if(courses.length === 0) {
@@ -47,6 +48,7 @@ const ManageCoursePage = (props) => {
 
   const onSave = (e) => {
     e.preventDefault()
+    setSaving(true)
     saveCourse(course).then( ()=> {
       history.push('/courses')
     })
@@ -54,13 +56,14 @@ const ManageCoursePage = (props) => {
 
   return (
     <>
-    { loading ? <Spinner/> : (
+    { authors.length === 0 || courses.length === 0 ? <Spinner/> : (
         <CourseForm
           course={course}
           errors={errors}
           authors={authors}
           onChange={onChange}
           onSave={onSave}
+          saving={saving}
         />
       )
     }
