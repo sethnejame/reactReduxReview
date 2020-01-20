@@ -11,22 +11,17 @@ const CoursesPage = (props) => {
 
   const { courses, authors, loadCourses, loadAuthors } = props
   const [ redirect, setRedirect ] = useState()
-  const [ loading, setLoading] = useState(true)
 
   useEffect(() => {
     if(courses.length === 0) {
-      setLoading(true)
         loadCourses().catch(error => {
             alert("Loading courses failed" + error);
         })
-      setLoading(false)
     }
     if(authors.length === 0) {
-      setLoading(true)
          loadAuthors().catch(error => {
              alert("Loading authors failed" + error);
          })
-      setLoading(false)
     }
   }, [])
 
@@ -56,7 +51,8 @@ CoursesPage.propTypes = {
   loadAuthors: PropTypes.func.isRequired,
   loadCourses: PropTypes.func.isRequired,
   courses: PropTypes.array.isRequired,
-  authors: PropTypes.array.isRequired
+  authors: PropTypes.array.isRequired,
+  loading: PropTypes.bool.isRequired
 }
 // the first argument in mapStateToProps is the entire Redux store state (state)
 function mapStateToProps(state) {
@@ -68,7 +64,8 @@ function mapStateToProps(state) {
         authorName: state.authors.find(a => a.id === course.authorId).name
       }
     }),
-    authors: state.authors
+    authors: state.authors,
+    loading: state.apiCallsInProgress > 0
   }
 }
 

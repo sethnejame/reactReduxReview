@@ -1,5 +1,6 @@
 import * as types from "./actionTypes";
 import * as courseApi from "../../api/courseApi"
+import {beginAPICall} from "./apiStatusActions";
 
 export function loadCoursesSuccess(courses) {
   return { type: types.LOAD_COURSES_SUCCESS, payload: courses }
@@ -16,6 +17,7 @@ export function createCourseSuccess(course) {
 // every thunk returns a func which accepts dispatch
 export function loadCourses() {
   return function(dispatch) {
+    dispatch(beginAPICall())
     return courseApi.getCourses().then(courses => {
       dispatch(loadCoursesSuccess(courses));
     }).catch(error => {
@@ -27,6 +29,7 @@ export function loadCourses() {
 
 export function saveCourse(course) {
   return function(dispatch, getState) {
+    dispatch(beginAPICall())
     return courseApi
       .saveCourse(course)
       .then(savedCourse => {

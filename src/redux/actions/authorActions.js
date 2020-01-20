@@ -1,11 +1,13 @@
 import { LOAD_AUTHORS_SUCCESS } from './actionTypes'
 import * as authorApi from '../../api/authorApi'
+import {beginAPICall} from "./apiStatusActions";
 
 export const loadAuthorsSuccess = (authors) => {
     return { type: LOAD_AUTHORS_SUCCESS, payload: authors}
 };
 
 export const loadAuthors = () => dispatch => {
+  dispatch(beginAPICall())
     return authorApi
         .getAuthors()
         .then(authors => {
