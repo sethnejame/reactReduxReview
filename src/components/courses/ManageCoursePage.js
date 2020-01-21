@@ -53,6 +53,9 @@ const ManageCoursePage = (props) => {
     saveCourse(course).then( ()=> {
       toast.success("Course saved!")
       history.push('/courses')
+    }).catch(error => {
+      setSaving(false)
+      setErrors({ onSave: error.message })
     })
   }
 

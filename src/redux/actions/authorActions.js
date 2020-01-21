@@ -1,6 +1,6 @@
 import { LOAD_AUTHORS_SUCCESS } from './actionTypes'
 import * as authorApi from '../../api/authorApi'
-import {beginAPICall} from "./apiStatusActions";
+import {apiCallError, beginAPICall} from "./apiStatusActions";
 
 export const loadAuthorsSuccess = (authors) => {
     return { type: LOAD_AUTHORS_SUCCESS, payload: authors}
@@ -15,6 +15,7 @@ export const loadAuthors = () => dispatch => {
         })
         .catch(error => {
             console.log('There was an error: ' + error);
+            dispatch(apiCallError(error))
             throw error;
         })
 };

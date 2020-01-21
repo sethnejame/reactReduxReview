@@ -1,6 +1,6 @@
 import * as types from "./actionTypes";
 import * as courseApi from "../../api/courseApi"
-import {beginAPICall} from "./apiStatusActions";
+import {apiCallError, beginAPICall} from "./apiStatusActions";
 
 export function loadCoursesSuccess(courses) {
   return { type: types.LOAD_COURSES_SUCCESS, payload: courses }
@@ -22,6 +22,7 @@ export function loadCourses() {
       dispatch(loadCoursesSuccess(courses));
     }).catch(error => {
       console.log('There was an error: ' + error);
+      dispatch(apiCallError(error))
       throw error;
     })
   }
@@ -39,6 +40,7 @@ export function saveCourse(course) {
           : dispatch(createCourseSuccess(savedCourse))
     }).catch(error => {
       console.log('There was an error: ' + error);
+      dispatch(apiCallError(error))
       throw error;
     })
   }
