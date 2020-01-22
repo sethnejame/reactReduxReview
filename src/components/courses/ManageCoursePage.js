@@ -47,8 +47,22 @@ const ManageCoursePage = (props) => {
     }))
   }
 
+  const formIsValid = () => {
+    const { title, authorId, category } = course
+    const errors = {}
+
+    if (!title) errors.title = 'Please provide a title.'
+    if (!authorId) errors.author = 'Please provide an author.'
+    if (!category) errors.category = 'Please provide a category.'
+
+    setErrors(errors);
+
+    return Object.keys(errors).length === 0
+  }
+
   const onSave = (e) => {
     e.preventDefault()
+    if (!formIsValid()) return
     setSaving(true)
     saveCourse(course).then( ()=> {
       toast.success("Course saved!")
