@@ -16,7 +16,6 @@ const ManageCoursePage = (props) => {
     loadAuthors,
     saveCourse,
     history,
-    loading,
     ...rest
   } = props;
 

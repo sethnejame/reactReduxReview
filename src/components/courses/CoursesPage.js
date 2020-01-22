@@ -26,9 +26,13 @@ const CoursesPage = (props) => {
     }
   }, [])
 
-  const handleDelete = course => {
+  const handleDelete = async course => {
     toast.success('Course was deleted')
-    deleteCourse(course)
+    try {
+      await deleteCourse(course)
+    } catch (error) {
+      toast.error('Delete failed: ' + error.message, { autoClose: false })
+    }
   }
 
   return (
