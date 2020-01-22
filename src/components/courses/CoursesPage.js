@@ -5,11 +5,12 @@ import * as authorActions from '../../redux/actions/authorActions'
 import PropTypes from 'prop-types'
 import CourseList from './CourseList'
 import { Redirect } from 'react-router-dom'
-import Spinner from "../common/Spinner";
+import Spinner from "../common/Spinner"
+import { toast } from 'react-toastify'
 
 const CoursesPage = (props) => {
 
-  const { courses, authors, loadCourses, loadAuthors, loading } = props
+  const { courses, authors, loadCourses, loadAuthors, deleteCourse, loading } = props
   const [ redirect, setRedirect ] = useState()
 
   useEffect(() => {
@@ -24,6 +25,11 @@ const CoursesPage = (props) => {
          })
     }
   }, [])
+
+  const handleDelete = course => {
+    toast.success('Course was deleted')
+    deleteCourse(course)
+  }
 
   return (
       <>
@@ -40,7 +46,7 @@ const CoursesPage = (props) => {
               Add Course
             </button>
 
-            <CourseList courses={courses} authors={authors}/>
+            <CourseList onDeleteClick={handleDelete} courses={courses} authors={authors}/>
           </>
         )}
       </>
@@ -73,6 +79,7 @@ const mapDispatchToProps = {
   createCourse: courseActions.saveCourse,
   loadCourses: courseActions.loadCourses,
   loadAuthors: authorActions.loadAuthors,
+  deleteCourse: courseActions.deleteCourse,
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(CoursesPage)

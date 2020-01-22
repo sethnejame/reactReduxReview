@@ -13,6 +13,10 @@ export function updateCourseSuccess(course) {
 export function createCourseSuccess(course) {
   return { type: types.CREATE_COURSE_SUCCESS, payload: course }
 }
+
+export function deleteCourseOptimistic(course) {
+  return { type: types.DELETE_COURSE_OPTIMISTIC, payload: course }
+}
 // thunks go at bottom of file
 // every thunk returns a func which accepts dispatch
 export function loadCourses() {
@@ -43,5 +47,14 @@ export function saveCourse(course) {
       dispatch(apiCallError(error))
       throw error;
     })
+  }
+}
+
+export function deleteCourse(course) {
+  return function (dispatch) {
+    // Doing optimistic delete, so not dispatching begin/end api call
+    // actions, or apiCallError action since we're not showing the loading status for this.
+    dispatch(deleteCourseOptimistic(course))
+    return courseApi.deleteCourse(course.id)
   }
 }
