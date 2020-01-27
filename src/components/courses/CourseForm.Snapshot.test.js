@@ -15,3 +15,16 @@ it("sets submit button label 'Saving...' when saving is true", () => {
 
   expect(tree).toMatchSnapshot()
 })
+
+it("sets submit button to 'Save' when saving is false", () => {
+  const tree = renderer.create(
+    <CourseForm
+      onChange={jest.fn()} // creates an empty function so we don't have to declare our own for the test
+      authors={authors}
+      onSave={jest.fn()}
+      course={courses[0]}
+      saving={false}
+    />)
+
+  expect(tree).toMatchSnapshot()
+})
