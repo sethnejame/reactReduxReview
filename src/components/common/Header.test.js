@@ -18,6 +18,7 @@ it('contains 3 anchors via mount', () => {
       <Header/>
     </MemoryRouter>
   ).find("a").length
-
+  // we look for 'a' (anchors) here because the final result of 'mount' is the actual DOM code
+  // so our NavLinks are actually rendered as <a tags
   expect(numAnchors).toEqual(3)
 })
