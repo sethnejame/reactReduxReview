@@ -15,6 +15,6 @@ it('Should handle creating courses', function() {
   store.dispatch(action)
 
   //assert
-  const createdCourse = store.getState().courses[0]
+  const createdCourse = store.getState().allCourses[0]
   expect(createdCourse).toEqual(course)
 })
